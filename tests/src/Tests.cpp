@@ -1,7 +1,8 @@
-#include "catch_amalgamated.hpp"
 #include <ranges>
 #include <algorithm>
-#include "Monomials.hpp"
+#include "catch_amalgamated.hpp"
+
+#include "mnl.hpp"
 
 using namespace mnl;
 

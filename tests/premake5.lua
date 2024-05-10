@@ -5,12 +5,12 @@ project "tests"
 	staticruntime "on"
 	systemversion "latest"
 
-	targetdir ("bin/" .. outputdir .. "%{prj.name}")
-	objdir ("bin-int/" .. outputdir .. "%{prj.name}")
+	targetdir ("../build/bin/" .. outputdir .. "%{prj.name}")
+	objdir ("../build/bin-int/" .. outputdir .. "%{prj.name}")
 
 	IncludeDir = {}
 	IncludeDir["Catch2"] = "../third_party/Catch2"
-	IncludeDir["Monomials"] = "../src"
+	IncludeDir["Monomials"] = "../include"
 
 	files
 	{

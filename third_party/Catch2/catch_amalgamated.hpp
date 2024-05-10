@@ -15,7 +15,7 @@
 #ifndef CATCH_AMALGAMATED_HPP_INCLUDED
 #define CATCH_AMALGAMATED_HPP_INCLUDED
 
-
+#define CATCH_AMALGAMATED_CUSTOM_MAIN
 /** \file
  * This is a convenience header for Catch2. It includes **all** of Catch2 headers.
  *

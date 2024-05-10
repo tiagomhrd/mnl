@@ -16,19 +16,19 @@ project "mnl"
 	language "C++"
 	cppdialect "C++11"
 
-	targetdir ("bin/" .. outputdir .. "%{prj.name}")
-	objdir ("bin-int/" .. outputdir .. "%{prj.name}")
+	targetdir ("build/bin/" .. outputdir .. "%{prj.name}")
+	objdir ("build/bin-int/" .. outputdir .. "%{prj.name}")
 
 	files
 	{
-		"src/**.h",
-		"src/**.hpp",
-		"src/**.cpp",
+		"include/**.h",
+		"include/**.hpp",
+		"include/**.cpp",
 	}
 
 	includedirs
 	{
-		"src",
+		"include",
 	}
 
 	filter "configurations:Debug"
