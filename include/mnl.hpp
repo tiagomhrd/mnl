@@ -20,6 +20,8 @@
             This is produced in C++11 and includes only <array>.
 
 **********************************************************************************************************************************/
+#ifndef MNL
+#define MNL
 #include <array>
 
 namespace mnl {
@@ -141,3 +143,4 @@ namespace mnl {
     ALIAS(10);
     #undef ALIAS
 }
+#endif

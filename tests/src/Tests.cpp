@@ -3,6 +3,7 @@
 #include "catch_amalgamated.hpp"
 
 #include "mnl.hpp"
+#include "pnl.hpp"
 
 using namespace mnl;
 
