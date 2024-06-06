@@ -11,6 +11,7 @@ project "tests"
 	IncludeDir = {}
 	IncludeDir["Catch2"] = "../third_party/Catch2"
 	IncludeDir["Monomials"] = "../include"
+	IncludeDir["boostufm"] = "../third_party/boost"
 
 	files
 	{
@@ -24,6 +25,7 @@ project "tests"
 		"src",
 		"%{IncludeDir.Catch2}",
 		"%{IncludeDir.Monomials}",
+		"%{IncludeDir.boostufm}",
 	}
 
 	links {

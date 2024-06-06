@@ -29,6 +29,7 @@ project "mnl"
 	includedirs
 	{
 		"include",
+		"third_party/boost",
 	}
 
 	filter "configurations:Debug"
