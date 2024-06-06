@@ -1,4 +1,5 @@
 *.sln
 *.vcxproj
+*.vcxproj.user
 build
 .vs
