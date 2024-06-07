@@ -4,7 +4,8 @@ project(mnl)
 
 add_library(${PROJECT_NAME} INTERFACE
 ${CMAKE_CURRENT_SOURCE_DIR}/include/mnl.hpp 
-${CMAKE_CURRENT_SOURCE_DIR}/include/pnl.hpp
+${CMAKE_CURRENT_SOURCE_DIR}/include/pnl.hpp 
+${CMAKE_CURRENT_SOURCE_DIR}/include/glq.hpp 
 )
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 11)
