@@ -1,5 +1,4 @@
 project "mnl"
-	location ".."
 	kind "StaticLib"
 	language "C++"
 	cppdialect "C++11"
@@ -9,9 +8,9 @@ project "mnl"
 
 	files
 	{
-		"include/**.h",
-		"include/**.hpp",
-		"include/**.cpp",
+		"**.h",
+		"**.hpp",
+		"**.cpp",
 	}
 
 	includedirs

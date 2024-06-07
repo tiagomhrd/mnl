@@ -1,17 +1,17 @@
 /**********************************************************************************************************************************
                                             Monomial's Library by Tiago Fernandes Moherdaui
 
-            This is a library meant to make operations with monomials easier by use of indicial notation.
+            The library is meant to make operations with monomials easier by use of indicial notation.
             
             Considering the monomial m_alpha of order k, in d-variables, i.e., belonging to P_k(R^d), the following
             operations are available:
 
-                Dimension of P_k(R^d)           Poly<d>::SpaceDim(k);
-                Order of m_alpha                Poly<d>::MonOrder(alpha);
-                Exponent of x_i in m_alpha      Poly<d>::Exponent(alpha, i);
-                Index of Product                Poly<d>::Product(alpha, beta);
-                Index of Derivative in x_i      Poly<d>::D(alpha, i);
-                Index of Antiderivative in x_i  Poly<d>::AD(alpha, i);
+                Dimension of P_k(R^d)                           mnl::Poly<d>::SpaceDim(k);
+                Order of m_alpha                                mnl::Poly<d>::MonOrder(alpha);
+                Exponent of x_i in m_alpha                      mnl::Poly<d>::Exponent(alpha, i);
+                Index of Product                                mnl::Poly<d>::Product(alpha, beta);
+                Index of Derivative in x_i                      mnl::Poly<d>::D(alpha, i);
+                Index of Antiderivative in x_i                  mnl::Poly<d>::AD(alpha, i);
 
             All operations are static member functions to class Poly<d>.
             Aliases are available up to d = 10, e.g., Poly<2> = Poly2D.

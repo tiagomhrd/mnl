@@ -1,3 +1,38 @@
+/**********************************************************************************************************************************
+                                            Monomial's Library by Tiago Fernandes Moherdaui
+
+            The library is meant to make operations with monomials easier by use of indicial notation.
+
+            This file provides a class representing polynomials in d-dimensions.
+            Each polynomial stores a set of pairs of monomial indices and scalar.
+            The following operations are available for polynomials mnl::Polynomial<d> p1, p2, p3:
+
+                Order of polynomial                             p1.Order();
+                Addition                                        p3 = p1 + p2; p1 += p2;
+                Multiplication                                  p3 = p1*p2; p1 *= p2;
+            
+            Terms in the monomial are stored in an unordered map with a monIndex as key and double as value.
+            The map is directly exposed as: p.Terms;
+            Typical procedures can be used to loop through the terms:
+
+            C++11
+            for (const auto& it : p.Terms) {
+                monIndex    index = it.first;
+                double      scalar = it.second;
+                // Do work...
+            }
+
+            C++17
+            for (const auto& [index, scalar] : p.Terms) {
+                // Do work...
+            }
+
+            Aliases are available for the Polynomial<d> struct as pnldD up to d = 10, e.g., Polynomial<2> = pnl2D.
+
+            This is produced in C++11 and includes only <array> and <unordered_map>.
+
+**********************************************************************************************************************************/
+
 #ifndef PNL
 #define PNL
 #include "mnl.hpp"
