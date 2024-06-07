@@ -14,31 +14,29 @@ const int dim(const int d, const int k) {
 		std::ranges::fold_left(std::views::iota(1, (k > d ? d : k) + 1), 1LL, std::multiplies<int64_t>());
 }
 
-
-
 TEST_CASE("Space Dimensions") {
 	SECTION("2D Monomials") {
-		constexpr int d = 2;
+		const int d = 2;
 		for (int k = 0; k < 5; ++k)
 			REQUIRE(Poly<d>::SpaceDim(k) == dim(d, k));
 	}
 	SECTION("3D Monomials") {
-		constexpr int d = 3;
+		const int d = 3;
 		for (int k = 0; k < 5; ++k)
 			REQUIRE(Poly<d>::SpaceDim(k) == dim(d, k));
 	}
 	SECTION("4D Monomials") {
-		constexpr int d = 4;
+		const int d = 4;
 		for (int k = 0; k < 5; ++k)
 			REQUIRE(Poly<d>::SpaceDim(k) == dim(d, k));
 	}
 	SECTION("5D Monomials") {
-		constexpr int d = 5;
+		const int d = 5;
 		for (int k = 0; k < 5; ++k)
 			REQUIRE(Poly<d>::SpaceDim(k) == dim(d, k));
 	}
 	SECTION("6D Monomials") {
-		constexpr int d = 6;
+		const int d = 6;
 		for (int k = 0; k < 5; ++k)
 			REQUIRE(Poly<d>::SpaceDim(k) == dim(d, k));
 	}
@@ -46,31 +44,31 @@ TEST_CASE("Space Dimensions") {
 
 TEST_CASE("Monomial Order") {
 	SECTION("2D Monomials") {
-		constexpr int d = 2;
+		const int d = 2;
 		for (monOrder k = 0; k < 5; ++k)
 			for (monIndex alpha = dim(d, k - 1); alpha < dim(d, k); ++alpha)
 				REQUIRE(Poly<d>::MonOrder(alpha) == k);
 	}
 	SECTION("3D Monomials") {
-		constexpr int d = 3;
+		const int d = 3;
 		for (monOrder k = 0; k < 5; ++k)
 			for (monIndex alpha = dim(d, k - 1); alpha < dim(d, k); ++alpha)
 				REQUIRE(Poly<d>::MonOrder(alpha) == k);
 	}
 	SECTION("4D Monomials") {
-		constexpr int d = 4;
+		const int d = 4;
 		for (monOrder k = 0; k < 5; ++k)
 			for (monIndex alpha = dim(d, k - 1); alpha < dim(d, k); ++alpha)
 				REQUIRE(Poly<d>::MonOrder(alpha) == k);
 	}
 	SECTION("5D Monomials") {
-		constexpr int d = 5;
+		const int d = 5;
 		for (monOrder k = 0; k < 5; ++k)
 			for (monIndex alpha = dim(d, k - 1); alpha < dim(d, k); ++alpha)
 				REQUIRE(Poly<d>::MonOrder(alpha) == k);
 	}
 	SECTION("6D Monomials") {
-		constexpr int d = 6;
+		const int d = 6;
 		for (monOrder k = 0; k < 5; ++k)
 			for (monIndex alpha = dim(d, k - 1); alpha < dim(d, k); ++alpha)
 				REQUIRE(Poly<d>::MonOrder(alpha) == k);
@@ -81,7 +79,7 @@ TEST_CASE("Sum of Exponents = Order") {
 	
 
 	SECTION("2D Monomials") {
-		constexpr int d = 2;
+		const int d = 2;
 		for (monOrder k = 0; k < 5; ++k) {
 			for (monIndex alpha = dim(d, k - 1); alpha < dim(d, k); ++alpha) {
 				int expSum = 0;
@@ -92,7 +90,7 @@ TEST_CASE("Sum of Exponents = Order") {
 		}
 	}
 	SECTION("3D Monomials") {
-		constexpr int d = 3;
+		const int d = 3;
 		for (monOrder k = 0; k < 5; ++k) {
 			for (monIndex alpha = dim(d, k - 1); alpha < dim(d, k); ++alpha) {
 				int expSum = 0;
@@ -103,7 +101,7 @@ TEST_CASE("Sum of Exponents = Order") {
 		}
 	}
 	SECTION("4D Monomials") {
-		constexpr int d = 4;
+		const int d = 4;
 		for (monOrder k = 0; k < 5; ++k) {
 			for (monIndex alpha = dim(d, k - 1); alpha < dim(d, k); ++alpha) {
 				int expSum = 0;
@@ -114,7 +112,7 @@ TEST_CASE("Sum of Exponents = Order") {
 		}
 	}
 	SECTION("5D Monomials") {
-		constexpr int d = 5;
+		const int d = 5;
 		for (monOrder k = 0; k < 5; ++k) {
 			for (monIndex alpha = dim(d, k - 1); alpha < dim(d, k); ++alpha) {
 				int expSum = 0;
@@ -125,7 +123,7 @@ TEST_CASE("Sum of Exponents = Order") {
 		}
 	}
 	SECTION("6D Monomials") {
-		constexpr int d = 6;
+		const int d = 6;
 		for (monOrder k = 0; k < 5; ++k) {
 			for (monIndex alpha = dim(d, k - 1); alpha < dim(d, k); ++alpha) {
 				int expSum = 0;
@@ -139,7 +137,7 @@ TEST_CASE("Sum of Exponents = Order") {
 
 TEST_CASE("Product") {
 	SECTION("2D Monomials") {
-		constexpr int d = 2;
+		const int d = 2;
 		SECTION("Product with Zero") {
 			for (monOrder k = 0; k < 5; ++k) {
 				for (monIndex alpha = dim(d, k - 1); alpha < dim(d, k); ++alpha) {
@@ -169,7 +167,7 @@ TEST_CASE("Product") {
 		}
 	}
 	SECTION("3D Monomials") {
-		constexpr int d = 3;
+		const int d = 3;
 		SECTION("Product with Zero") {
 			for (monOrder k = 0; k < 5; ++k) {
 				for (monIndex alpha = dim(d, k - 1); alpha < dim(d, k); ++alpha) {
@@ -199,7 +197,7 @@ TEST_CASE("Product") {
 		}
 	}
 	SECTION("4D Monomials") {
-		constexpr int d = 4;
+		const int d = 4;
 		SECTION("Product with Zero") {
 			for (monOrder k = 0; k < 5; ++k) {
 				for (monIndex alpha = dim(d, k - 1); alpha < dim(d, k); ++alpha) {
@@ -229,7 +227,7 @@ TEST_CASE("Product") {
 		}
 	}
 	SECTION("5D Monomials") {
-		constexpr int d = 5;
+		const int d = 5;
 		SECTION("Product with Zero") {
 			for (monOrder k = 0; k < 5; ++k) {
 				for (monIndex alpha = dim(d, k - 1); alpha < dim(d, k); ++alpha) {
@@ -259,7 +257,7 @@ TEST_CASE("Product") {
 		}
 	}
 	SECTION("6D Monomials") {
-		constexpr int d = 6;
+		const int d = 6;
 		SECTION("Product with Zero") {
 			for (monOrder k = 0; k < 5; ++k) {
 				for (monIndex alpha = dim(d, k - 1); alpha < dim(d, k); ++alpha) {
@@ -292,7 +290,7 @@ TEST_CASE("Product") {
 
 TEST_CASE("Derivatives and AntiDerivatives") {
 	SECTION("2D Monomials") {
-		constexpr int d = 2;
+		const int d = 2;
 		SECTION("Derivative of AntiDerivative recovers monomial") {
 			for (monOrder k = 0; k < 5; ++k) {
 				for (monIndex alpha = dim(d, k - 1); alpha < dim(d, k); ++alpha) {
@@ -304,7 +302,7 @@ TEST_CASE("Derivatives and AntiDerivatives") {
 		}
 	}
 	SECTION("3D Monomials") {
-		constexpr int d = 3;
+		const int d = 3;
 		SECTION("Derivative of AntiDerivative recovers monomial") {
 			for (monOrder k = 0; k < 5; ++k) {
 				for (monIndex alpha = dim(d, k - 1); alpha < dim(d, k); ++alpha) {
@@ -316,7 +314,7 @@ TEST_CASE("Derivatives and AntiDerivatives") {
 		}
 	}
 	SECTION("4D Monomials") {
-		constexpr int d = 4;
+		const int d = 4;
 		SECTION("Derivative of AntiDerivative recovers monomial") {
 			for (monOrder k = 0; k < 5; ++k) {
 				for (monIndex alpha = dim(d, k - 1); alpha < dim(d, k); ++alpha) {
@@ -328,7 +326,7 @@ TEST_CASE("Derivatives and AntiDerivatives") {
 		}
 	}
 	SECTION("5D Monomials") {
-		constexpr int d = 5;
+		const int d = 5;
 		SECTION("Derivative of AntiDerivative recovers monomial") {
 			for (monOrder k = 0; k < 5; ++k) {
 				for (monIndex alpha = dim(d, k - 1); alpha < dim(d, k); ++alpha) {
@@ -340,7 +338,7 @@ TEST_CASE("Derivatives and AntiDerivatives") {
 		}
 	}
 	SECTION("6D Monomials") {
-		constexpr int d = 6;
+		const int d = 6;
 		SECTION("Derivative of AntiDerivative recovers monomial") {
 			for (monOrder k = 0; k < 5; ++k) {
 				for (monIndex alpha = dim(d, k - 1); alpha < dim(d, k); ++alpha) {
@@ -356,7 +354,7 @@ TEST_CASE("Derivatives and AntiDerivatives") {
 TEST_CASE("Product and AntiDerivatives") {
 
 	SECTION("2D Monomials") {
-		constexpr int d = 2;
+		const int d = 2;
 		SECTION("AntiDerivative is product with variable") {
 			for (monOrder k = 0; k < 5; ++k)
 				for (monIndex alpha = dim(d, k - 1); alpha < dim(d, k); ++alpha)
@@ -365,7 +363,7 @@ TEST_CASE("Product and AntiDerivatives") {
 		}
 	}
 	SECTION("3D Monomials") {
-		constexpr int d = 3;
+		const int d = 3;
 		SECTION("AntiDerivative is product with variable") {
 			for (monOrder k = 0; k < 5; ++k)
 				for (monIndex alpha = dim(d, k - 1); alpha < dim(d, k); ++alpha)
@@ -374,7 +372,7 @@ TEST_CASE("Product and AntiDerivatives") {
 		}
 	}
 	SECTION("4D Monomials") {
-		constexpr int d = 4;
+		const int d = 4;
 		SECTION("AntiDerivative is product with variable") {
 			for (monOrder k = 0; k < 5; ++k)
 				for (monIndex alpha = dim(d, k - 1); alpha < dim(d, k); ++alpha)
@@ -383,7 +381,7 @@ TEST_CASE("Product and AntiDerivatives") {
 		}
 	}
 	SECTION("5D Monomials") {
-		constexpr int d = 5;
+		const int d = 5;
 		SECTION("AntiDerivative is product with variable") {
 			for (monOrder k = 0; k < 5; ++k)
 				for (monIndex alpha = dim(d, k - 1); alpha < dim(d, k); ++alpha)
@@ -392,13 +390,114 @@ TEST_CASE("Product and AntiDerivatives") {
 		}
 	}
 	SECTION("6D Monomials") {
-		constexpr int d = 6;
+		const int d = 6;
 		SECTION("AntiDerivative is product with variable") {
 			for (monOrder k = 0; k < 5; ++k)
 				for (monIndex alpha = dim(d, k - 1); alpha < dim(d, k); ++alpha)
 					for (int x = 0; x < d; ++x)
 						REQUIRE(Poly<d>::AD(alpha, x) == Poly<d>::Product(alpha, x + 1));
 		}
+	}
+}
+
+TEST_CASE("2D Polynomials") {
+	const int d = 2;
+	SECTION("(x+y)^2") {
+		pnl2D p1;
+		p1.Terms[1] = 1.;
+		p1.Terms[2] = 1.;
+		p1 *= p1;
+		REQUIRE(p1.Terms[3] == 1.0);
+		REQUIRE(p1.Terms[4] == 2.0);
+		REQUIRE(p1.Terms[5] == 1.0);
+		REQUIRE(p1.Terms.size() == 3);
+		REQUIRE(p1.Order() == 2);
+	}
+	SECTION("(x+y)^3") {
+		pnl2D p1, res;
+		p1.Terms[1] = 1.;
+		p1.Terms[2] = 1.;
+		res = p1 * p1 * p1;
+		
+		REQUIRE(res.Terms[6] == 1.0);
+		REQUIRE(res.Terms[7] == 3.0);
+		REQUIRE(res.Terms[8] == 3.0);
+		REQUIRE(res.Terms[9] == 1.0);
+		REQUIRE(res.Terms.size() == 4);
+		REQUIRE(res.Order() == 3);
+	}
+	SECTION("(x+1)^2") {
+		pnl2D p1;
+		p1.Terms[1] = 1.;
+		p1.Terms[0] = 1.;
+		p1 *= p1;
+		REQUIRE(p1.Terms[3] == 1.0);
+		REQUIRE(p1.Terms[1] == 2.0);
+		REQUIRE(p1.Terms[0] == 1.0);
+		REQUIRE(p1.Terms.size() == 3);
+		REQUIRE(p1.Order() == 2);
+	}
+	SECTION("(x+1)(x-1)") {
+		pnl2D p1, p2;
+		p1.Terms[1] = 1.;
+		p1.Terms[0] = 1.;
+		p2.Terms[1] = 1.;
+		p2.Terms[0] = -1.;
+		p1 *= p2;
+		REQUIRE(p1.Terms[3] == 1.0);
+		REQUIRE(p1.Terms[0] == -1.0);
+		REQUIRE(p1.Terms.size() == 2);
+		REQUIRE(p1.Order() == 2);
+	}
+}
+
+TEST_CASE("3D Polynomials") {
+	const int d = 3;
+	SECTION("(x+y)^2") {
+		pnl3D p1;
+		p1.Terms[1] = 1.;
+		p1.Terms[2] = 1.;
+		p1 *= p1;
+		REQUIRE(p1.Terms[4] == 1.0);
+		REQUIRE(p1.Terms[5] == 2.0);
+		REQUIRE(p1.Terms[7] == 1.0);
+		REQUIRE(p1.Terms.size() == 3);
+		REQUIRE(p1.Order() == 2);
+	}
+	SECTION("(x+y+z)^2") {
+		pnl3D p1;
+		p1.Terms[1] = 1.;
+		p1.Terms[2] = 1.;
+		p1.Terms[3] = 1.;
+		p1 *= p1;
+		REQUIRE(p1.Terms[4] == 1.0);
+		REQUIRE(p1.Terms[7] == 1.0);
+		REQUIRE(p1.Terms[9] == 1.0);
+		REQUIRE(p1.Terms[5] == 2.0);
+		REQUIRE(p1.Terms[6] == 2.0);
+		REQUIRE(p1.Terms[8] == 2.0);
+		REQUIRE(p1.Terms.size() == 6);
+		REQUIRE(p1.Order() == 2);
+	}
+	SECTION("(x+y+z)^3") {
+		pnl3D p1, res;
+		p1.Terms[1] = 1.;
+		p1.Terms[2] = 1.;
+		p1.Terms[3] = 1.;
+		res = p1 * p1 * p1;
+
+		REQUIRE(res.Terms[10] == 1.0);
+		REQUIRE(res.Terms[16] == 1.0);
+		REQUIRE(res.Terms[19] == 1.0);
+		REQUIRE(res.Terms[11] == 3.0);
+		REQUIRE(res.Terms[12] == 3.0);
+		REQUIRE(res.Terms[13] == 3.0);
+		REQUIRE(res.Terms[14] == 6.0);
+		REQUIRE(res.Terms[15] == 3.0);
+		REQUIRE(res.Terms[17] == 3.0);
+		REQUIRE(res.Terms[18] == 3.0);
+		REQUIRE(res.Terms.size() == 10);
+		REQUIRE(res.Order() == 3);
 	}
 }
 
