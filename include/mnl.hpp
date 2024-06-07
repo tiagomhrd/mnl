@@ -37,7 +37,7 @@ namespace mnl {
     constexpr std::array<int64_t, 21> _factorialTable = { 1,1,2,6,24,120,720,5040,40320,362880,3628800,39916800,479001600,6227020800,87178291200,1307674368000,20922789888000,355687428096000,6402373705728000,121645100408832000,2432902008176640000 };
     constexpr inline int64_t Factorial(const int n) { return _factorialTable[n]; }
 
-    template<int d>
+    template<const int d>
     class Poly {
     public:
         /************************************************************
@@ -130,17 +130,17 @@ namespace mnl {
         constexpr static monIndex   AD(const monIndex alpha, const int variable) { return alpha + 1; }
     };
 
-    #define ALIAS(d) using Poly ##d ##D = Poly<d>
-    ALIAS(1);
-    ALIAS(2);
-    ALIAS(3);
-    ALIAS(4);
-    ALIAS(5);
-    ALIAS(6);
-    ALIAS(7);
-    ALIAS(8);
-    ALIAS(9);
-    ALIAS(10);
-    #undef ALIAS
+    #define ALIASPSpace(d) using PSpace ##d ##D = Poly<d>
+    ALIASPSpace(1);
+    ALIASPSpace(2);
+    ALIASPSpace(3);
+    ALIASPSpace(4);
+    ALIASPSpace(5);
+    ALIASPSpace(6);
+    ALIASPSpace(7);
+    ALIASPSpace(8);
+    ALIASPSpace(9);
+    ALIASPSpace(10);
+    #undef ALIASPSpace
 }
 #endif
