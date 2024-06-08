@@ -37,6 +37,17 @@ namespace mnl {
     constexpr std::array<int64_t, 21> _factorialTable = { 1,1,2,6,24,120,720,5040,40320,362880,3628800,39916800,479001600,6227020800,87178291200,1307674368000,20922789888000,355687428096000,6402373705728000,121645100408832000,2432902008176640000 };
     constexpr inline int64_t Factorial(const int n) { return _factorialTable[n]; }
 
+    constexpr int64_t _Combination(const int n, const int k) {
+        if (k > n) return 0LL;
+        if (k == n || k == 0) return 1LL;
+
+        double c = double(n);
+        for (int i = 2; i <= (k > (n - k) ? n - k : k); ++i)
+            c *= double(n + 1 - i) / double(i);
+
+        return int64_t(c + 0.5);
+    }
+
     template<const int d>
     class Poly {
     public:
@@ -44,7 +55,8 @@ namespace mnl {
             Dimension of space P_k(R^d)
         ************************************************************/
         constexpr static int SpaceDim(const monOrder k) {
-            return (k < 0 ? 0 : Factorial(k + d) / (Factorial(k) * Factorial(d)));
+            //return (k < 0 ? 0 : Factorial(k + d) / (Factorial(k) * Factorial(d)));
+            return (k < 0 ? 0 : _Combination(k + d, d));
         }
 
         /************************************************************
