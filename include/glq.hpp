@@ -294,7 +294,7 @@ namespace mnl {
         for (size_t i{}; i < readLength; ++i) {
             const double xi = 0.5 * _clut[2 * (startIndex + i)] + .5, wi = _clut[2 * (startIndex + i) + 1] * .5;
             out.push_back({ xi, wi });
-            out.push_back({ xi - .5, wi });
+            out.push_back({ 1. - xi , wi });
             wSum += 2 * wi;
         }
 
