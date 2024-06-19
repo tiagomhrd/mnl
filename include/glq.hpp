@@ -292,10 +292,10 @@ namespace mnl {
         std::vector<std::array<double, 2>> out;
         double wSum = 0.0;
         for (size_t i{}; i < readLength; ++i) {
-            const double xi = 0.5 * _clut[2 * (startIndex + i)] - .5, wi = _clut[2 * (startIndex + i) + 1] * .5;
+            const double xi = 0.5 * _clut[2 * (startIndex + i)] + .5, wi = _clut[2 * (startIndex + i) + 1] * .5;
             out.push_back({ xi, wi });
-            out.push_back({ -xi, wi });
-            wSum += wi;
+            out.push_back({ xi - .5, wi });
+            wSum += 2 * wi;
         }
 
         if (!(n % 2))
