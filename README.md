@@ -102,7 +102,15 @@ To generate them with CMake, do the following:
 
 This section introduces some notation and examples that can help understand the intended use and workflow of the project.
 
+In a general sense, monomials can be thought of products of powers of variables, i.e., for $m_\alpha\in P_k(\mathbb{R}^d)$ we have
 
+<p align=center>
+$m_\alpha=\prod_{i=0}^{d-1} x_i^{e_i}$
+</p>
+
+where $x_i$ is the variable and $e_i$ its corresponding exponent with $\sum_{i=0}^{d-1}e_i\leq k$ because it is of order at most $k$.
+
+Obs: Zero-based indexing is used in the code.
 
 
 ### mnl
