@@ -1,7 +1,7 @@
 # MNL (monomial)
 
-MNL (monomial) is an index-based approach to represent monomials of arbitrary order ($k$) over an arbitrary number of variables ($d$):
-$m_\alpha\;\in\;P_k(\mathbb{R}^d)$.
+MNL (monomial) is an index-based approach to represent monomials of arbitrary order $k$, over an arbitrary number of variables $d$:
+$m_\alpha \in P_k(\mathbb{R}^d)$.
 
 This project consists in a lightweight framework for the representation of canonical basis monomials.
 
