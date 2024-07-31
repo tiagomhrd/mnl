@@ -51,8 +51,22 @@ This integration scheme is aimed at the sequential integration of monomials by p
 
 So far, the code is implemented only in C++, and uses only `.hpp` files which can be included directly into the user's code.
 
+For internal dependencies: `pnl.hpp` and `glq.hpp` include `mnl.hpp`.
 
-## How to Use
+For external dependencies: 
+- `mnl.hpp` includes `<array>`;
+- `pnl.hpp` includes `mnl.hpp` (`<array>`) and `<unordered_map>`;
+- `glq.hpp` includes `mnl.hpp` (`<array>`) and `<vector>`;
+
+For development, the project also supports two build systems: [CMake]() and [Premake]().
+The latter with its executable included in the project files inside the `third_party` directory along with its license.
+
+These build systems will set the `tests` project as the main project, this uses the [Catch2](https://github.com/catchorg/Catch2) framework for testing.
+The code for Catch2 is also included in its amalgamated version inside `third_party`, this was taken from version `v3.6.0`.
+
+These tests can be useful for learning purposes.
+
+## Usage
 
 ### mnl
 
