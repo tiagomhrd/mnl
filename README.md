@@ -102,13 +102,54 @@ To generate them with CMake, do the following:
 
 This section introduces some notation and examples that can help understand the intended use and workflow of the project.
 
+### Monomials
+
 In a general sense, monomials can be thought of products of powers of variables, i.e., for $m_\alpha\in P_k(\mathbb{R}^d)$ we have
 
 $$m_\alpha=\prod_{i=0}^{d-1} x_i^{e_i}$$
 
-where $x_i$ is the variable and $e_i$ its corresponding exponent with $$\sum_{i=0}^{d-1}e_i\leq k$$ because it is of order at most $k$.
+where $x_i$ is the variable and $e_i$ its corresponding exponent with
 
-Obs: Zero-based indexing is used in the code.
+$$\sum_{i=0}^{d-1}e_i\leq k$$
+
+because it is of order at most $k$.
+
+Obs: Zero-based indexing for the variables is used throughout the code.
+
+### Indexing
+
+The core idea that motivated this approach is the enumeration of monomials and being able to decode information from these indices.
+
+Two indices are common for all spaces contained here:
+- $\alpha=-1$ corresponds to $0$, i.e., $m_{-1}=0$.
+- $\alpha=0$ corresponds to the constant $1$, i.e., $m_0=1$.
+
+The other indices depend on the number of variables, e.g. (adopting $x_0=x$, $x_1=y$, etc.)
+- 1D: $m_1=x$, $m_2=x^2$, $\dots$ , $m_\alpha=x^\alpha$;
+- 2D: $m_1=x$, $m_2=y$, $m_3=x^2$, $m_4=xy$, $m_5=y^2$, etc.
+- 3D: $m_1=x$, $m_2=y$, $m_3=z$, etc.
+
+### Using the code in mnl.hpp
+
+The design consists of classes templated for the number of variables $d$, containing static functions providing the functionality.
+Briefly summarized as:
+
+```cpp
+namespace mnl{
+    template<const int d>
+    class Poly {
+        constexpr static int        SpaceDim(const monOrder k);
+        constexpr static monOrder   MonOrder(const monIndex alpha);
+        constexpr static int        Exponent(const monIndex alpha, const int variable);
+        constexpr static monIndex   Product (const monIndex alpha, const monIndex beta);
+        constexpr static monIndex   D       (const monIndex alpha, const int variable);
+        constexpr static monIndex   AD      (const monIndex alpha, const int variable);
+    };
+}
+```
+
+Aliases for $d\in [1,10]$ are provided as `PSpacedD`, i.e., `PSpace1D`, `PSpace2D`, `PSpace3D`, etc.
+
 
 
 ### mnl
@@ -116,10 +157,4 @@ Obs: Zero-based indexing is used in the code.
 ### pnl
 
 ### glq
-
-
-
-
-
-
 
