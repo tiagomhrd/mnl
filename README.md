@@ -1,7 +1,8 @@
 # MNL (monomial)
 
 MNL (monomial) is an index-based approach to represent monomials of arbitrary order $k$, over an arbitrary number of variables $d$:
-$m_\alpha \in P_k(\mathbb{R}^d)$.
+
+$m_\alpha \in P_k(\mathbb{R}^d)$
 
 This project consists in a lightweight framework for the representation of canonical basis monomials.
 
@@ -9,7 +10,8 @@ This project consists in a lightweight framework for the representation of canon
 
 1. [Motivation](#motivation)
 2. [Organization and Features](#organization-and-features)
-
+3. [Installation Instruction](#installation-instructions)
+4. [Usage and Examples](#usage-and-examples)
 
 ## Motivation
 
@@ -51,22 +53,57 @@ This integration scheme is aimed at the sequential integration of monomials by p
 
 So far, the code is implemented only in C++, and uses only `.hpp` files which can be included directly into the user's code.
 
-For internal dependencies: `pnl.hpp` and `glq.hpp` include `mnl.hpp`.
+One can either copy them directly from github, or clone it.
+```bash
+git clone https://github.com/tiagomhrd/mnl.git
+```
 
-For external dependencies: 
+As a design decision, the main code has been implemented in `C++11`, to reach wider audiences.
+The testing project has been implemented in `C++23`.
+
+### Dependencies
+
+Internal dependencies: `pnl.hpp` and `glq.hpp` include `mnl.hpp`.
+
+External dependencies: 
 - `mnl.hpp` includes `<array>`;
 - `pnl.hpp` includes `mnl.hpp` (`<array>`) and `<unordered_map>`;
 - `glq.hpp` includes `mnl.hpp` (`<array>`) and `<vector>`;
 
-For development, the project also supports two build systems: [CMake]() and [Premake]().
+The dependency on `<array>` is associated with the use of lookup tables.
+It can be substituted in the case of `mnl.hpp` and `pnl.hpp` by providing another way of computing factorials for the computation of Monomial Orders.
+It is required for `glq.hpp` as the whole thing basically consists on a big lookup table.
+
+### Development
+
+For development, the project also supports two build systems: [CMake](https://cmake.org/) and [Premake](https://premake.github.io/).
 The latter with its executable included in the project files inside the `third_party` directory along with its license.
 
 These build systems will set the `tests` project as the main project, this uses the [Catch2](https://github.com/catchorg/Catch2) framework for testing.
-The code for Catch2 is also included in its amalgamated version inside `third_party`, this was taken from version `v3.6.0`.
+The code for Catch2 is also included in its amalgamated version inside `third_party` (along with its License).
+The version used is `v3.6.0`.
 
 These tests can be useful for learning purposes.
 
-## Usage
+To generate project files using Premake, just edit `GenerateProjects.bat` to your editor of choice using the [options provided](https://premake.github.io/docs/Using-Premake#using-premake-to-generate-project-files) and run it.
+To avoid run a `.bat` file, you can also run the command directly on you command prompt:
+```bash
+\mnl> third_party\premake5.exe [action]
+```
+
+To generate them with CMake, do the following:
+```bash
+\mnl> mkdir build
+\mnl> cd build
+\mnl\build> cmake ..
+```
+
+## Usage and Examples
+
+This section introduces some notation and examples that can help understand the intended use and workflow of the project.
+
+
+
 
 ### mnl
 
