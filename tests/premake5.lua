@@ -4,6 +4,7 @@ project "tests"
 	cppdialect "C++latest"
 	staticruntime "on"
 	systemversion "latest"
+	location "../build"
 
 	targetdir ("../build/bin/" .. outputdir .. "%{prj.name}")
 	objdir ("../build/bin-int/" .. outputdir .. "%{prj.name}")

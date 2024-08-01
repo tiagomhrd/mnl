@@ -1,4 +1,5 @@
 project "mnl"
+	location "../build"
 	kind "StaticLib"
 	language "C++"
 	cppdialect "C++11"
