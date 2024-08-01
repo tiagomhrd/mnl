@@ -49,6 +49,8 @@ As the use of monomials is usually associated with their integration over some d
 The choice to restrict the quadrature rules to the 1D ones is motivated by the use of [Homogeneous Numerical Integration](https://www.sciencedirect.com/science/article/pii/S0167839620301011) on general polytopes, which is currently being implemented in the sibling project [PTP](https://github.com/tiagomhrd/ptp) for two and three dimensions.
 This integration scheme is aimed at the sequential integration of monomials by performing successive applications of the [Generalized Stokes Theorem](https://en.wikipedia.org/wiki/Generalized_Stokes_theorem) along with the leveraging [Euler's Theorem for Homogeneous Functions](https://en.wikipedia.org/wiki/Homogeneous_function#Euler's_theorem) to ultimately performs these integrations in the edges of the polytope without increase of the integrand's order, requiring only that the integrals of lesser orders are known.
 
+The quadratures were obtained with the software [Mathematica](https://www.wolfram.com/mathematica/), using function `GaussianQuadratureWeights`, and compressing (using their symmetry) results into a lookup table.
+
 ## Installation Instructions
 
 So far, the code is implemented only in C++, and uses only `.hpp` files which can be included directly into the user's code.
