@@ -255,7 +255,7 @@ namespace mnl{
 }
 ```
 
-Aliases are provided for $d\in[1,10]$ as Polynomial<d> being pnldD (e.g., `pnl2D`, `pnl3D`, etc.)
+Aliases are provided for $d\in[1,10]$ as Polynomial\<d\> being pnldD, i.e., `pnl2D`, `pnl3D`, etc.
 
 Usage example in the 2D case
 ```cpp
