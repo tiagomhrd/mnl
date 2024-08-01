@@ -155,7 +155,7 @@ Aliases for $d\in [1,10]$ are provided as `PSpacedD`, i.e., `PSpace1D`, `PSpace2
 
 Let's take for example monomials in 2D.
 
-We can check the dimension of the polynomial space of any order
+One can check the dimension of the polynomial space of any order
 ```cpp
 #include "mnl.hpp"
 static_assert(mnl::PSpace2D::SpaceDim(0) == 1);  // {1}
@@ -164,7 +164,7 @@ static_assert(mnl::PSpace2D::SpaceDim(2) == 6);  // {1, x, y, x^2, xy, y^2}
 static_assert(mnl::PSpace2D::SpaceDim(3) == 10); // {1, x, y, x^2, xy, y^2, x^3, x^2y, xy^2, y^3}
 ```
 
-We can find the monomial order for any monomial based on its index
+One can find the monomial order for any monomial based on its index
 ```cpp
 #include "mnl.hpp"
 static_assert(mnl::PSpace2D::MonOrder(0) == 0);  // m_0 = 1
@@ -173,7 +173,7 @@ static_assert(mnl::PSpace2D::MonOrder(5) == 2);  // m_5 = y^2
 static_assert(mnl::PSpace2D::MonOrder(7) == 3);  // m_7 = x^2y
 ```
 
-We can find any of the exponents given the index
+One can find any of the exponents given the index
 ```cpp
 #include "mnl.hpp"
 // x is direction 0, y is direction 1
@@ -188,14 +188,14 @@ static_assert(mnl::PSpace2D::Exponent(7, 0) == 2);
 static_assert(mnl::PSpace2D::Exponent(7, 1) == 1);
 ```
 
-We can find the index of the monomial which is the product of two monomials
+One can find the index of the monomial which is the product of two monomials
 ```cpp
 #include "mnl.hpp"
 // m_5 * m_7 = y^2 * x^2y = x^2y^3 = m_18
 static_assert(mnl::PSpace2D::Product(5, 7) == 18);
 ```
 
-We can find the index of the monomial which is the derivative with respect to some direction
+One can find the index of the monomial which is the derivative with respect to some direction
 ```cpp
 #include "mnl.hpp"
 // x is direction 0, y is direction 1
@@ -213,7 +213,7 @@ static_assert(mnl::PSpace2D::D(7, 0) == 4);  // d/dx(x^2y) ~ xy = m_4
 static_assert(mnl::PSpace2D::D(7, 1) == 3);  // d/dy(x^2y) ~ x^2 = m_3
 ```
 
-We can find the index of the antiderivative with respect to some direction
+One can find the index of the antiderivative with respect to some direction
 ```cpp
 #include "mnl.hpp"
 // x is direction 0, y is direction 1
@@ -233,7 +233,78 @@ static_assert(mnl::PSpace2D::AD(7, 1) == 12);  // ADy(x^2y) ~ x^2y^2 = m_12
 
 ### Using the code in pnl.hpp
 
+This code is not intended for heavy use, and therefore its interface is not exactly polished.
+The initialization procedure is a bit rough for the polynomial classes, but the operations with them are friendlier.
 
+A summary of the implementation of the polynomial structures is:
+```cpp
+#include "mnl.hpp"
+#include <unordered_map>
+namespace mnl{
+    template <int d>
+    struct Polynomial {
+        std::unordered_map<monIndex, double> Terms;
 
-### glq
+        monOrder Order() const;
+        Polynomial<d>& operator*=(const Polynomial<d>& p); // Checks Zeroes
+        Polynomial<d>& operator+=(const Polynomial<d>& p); // Checks Zeroes
+        void CheckZeroes(); // Checks for entries that should be zero (abs value of coefficient being less than 1e-10)
+    };
+    template<int d>
+    Polynomial<d> operator*(const Polynomial<d>& p1, const Polynomial<d>& p2); // Checks Zeroes
+}
+```
+
+Aliases are provided for $d\in[1,10]$ as Polynomial<d> being pnldD (e.g., pnl2D, pnl3D, etc.)
+
+Usage example in the 2D case
+```cpp
+#include "pnl.hpp"
+
+mnl::pnl2D p, q;
+// p is x^2 + y^2
+p.Terms[3] = 1.0;
+p.Terms[5] = 1.0;
+// q is 2 * x^3 + 3 * y^3
+q.Terms[6] = 2.0;
+q.Terms[9] = 3.0;
+
+mnl::pnl2D prod = p * q;
+// prod = 2 * x^5 + 3 * x^2y^3 + 2 * x^3y^2 + 3 * y^5
+static_assert(prod.Terms[15] == 2.0); // 2 * x^5     = 2 * m_15
+static_assert(prod.Terms[18] == 3.0); // 3 * x^2y^3  = 3 * m_18
+static_assert(prod.Terms[17] == 2.0); // 2 * x^3y^2  = 2 * m_17
+static_assert(prod.Terms[20] == 3.0); // 3 * y^5     = 3 * m_20
+
+// p^2 = x^4 + 2 * x^2y^2 + y^4
+p *= p;
+static_assert(p.Terms[10] == 1.0); // 1 * x^4     = 1 * m_10
+static_assert(p.Terms[12] == 2.0); // 2 * x^2y^2  = 2 * m_12
+static_assert(p.Terms[14] == 1.0); // 1 * y^4     = 1 * m_14
+
+// p^2 + q = x^4 + 2 * x^2y^2 + y^4 + 2 * x^3 + 3 * y^3
+p += q;
+static_assert(p.Terms[10] == 1.0); // 1 * x^4     = 1 * m_10
+static_assert(p.Terms[12] == 2.0); // 2 * x^2y^2  = 2 * m_12
+static_assert(p.Terms[14] == 1.0); // 1 * y^4     = 1 * m_14
+static_assert(p.Terms[6]  == 2.0); // 2 * x^3     = 2 * m_6
+static_assert(p.Terms[9]  == 3.0); // 3 * y^3     = 3 * m_9
+```
+
+### Using the code in glq.hpp
+
+The usage here is much more straightforward.
+The code summary is
+```cpp
+#include "mnl.hpp"
+#include <vector>
+namespace mnl{
+    const std::vector<std::array<double, 2>> GaussLegendre(const monOrder k);
+    const std::vector<std::array<double, 2>> GaussLegendreR(const monOrder k);
+}
+```
+
+`GaussLegendre(const monOrder k)` returns a vector with `{position, weight}` pairs in the local system for the interval $[-1,1]$.
+
+`GaussLegendreR(const monOrder k)` returns a vector with `{position, weight}` pairs in the local system for the interval $[0,1]$.
 
