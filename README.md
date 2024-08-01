@@ -105,9 +105,13 @@ This section introduces some notation and examples that can help understand the 
 ### Monomials
 
 In a general sense, monomials can be thought of products of powers of variables, i.e., for $m_\alpha\in P_k(\mathbb{R}^d)$ we have
+
 $$m_\alpha=\prod_{i=0}^{d-1} x_i^{e_i}$$
+
 where $x_i$ is the variable and $e_i$ its corresponding exponent with
+
 $$\sum_{i=0}^{d-1}e_i\leq k$$
+
 because it is of order at most $k$.
 
 Obs: Zero-based indexing for the variables is used throughout the code.
