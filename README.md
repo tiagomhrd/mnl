@@ -136,6 +136,9 @@ Briefly summarized as:
 
 ```cpp
 namespace mnl{
+    using monIndex = int;
+    using monOrder = int;
+
     template<const int d>
     class Poly {
         constexpr static int        SpaceDim(const monOrder k);
@@ -150,11 +153,86 @@ namespace mnl{
 
 Aliases for $d\in [1,10]$ are provided as `PSpacedD`, i.e., `PSpace1D`, `PSpace2D`, `PSpace3D`, etc.
 
+Let's take for example monomials in 2D.
 
+We can check the dimension of the polynomial space of any order
+```cpp
+#include "mnl.hpp"
+static_assert(mnl::PSpace2D::SpaceDim(0) == 1);  // {1}
+static_assert(mnl::PSpace2D::SpaceDim(1) == 3);  // {1, x, y}
+static_assert(mnl::PSpace2D::SpaceDim(2) == 6);  // {1, x, y, x^2, xy, y^2}
+static_assert(mnl::PSpace2D::SpaceDim(3) == 10); // {1, x, y, x^2, xy, y^2, x^3, x^2y, xy^2, y^3}
+```
 
-### mnl
+We can find the monomial order for any monomial based on its index
+```cpp
+#include "mnl.hpp"
+static_assert(mnl::PSpace2D::MonOrder(0) == 0);  // m_0 = 1
+static_assert(mnl::PSpace2D::MonOrder(1) == 1);  // m_1 = x
+static_assert(mnl::PSpace2D::MonOrder(5) == 2);  // m_5 = y^2
+static_assert(mnl::PSpace2D::MonOrder(7) == 3);  // m_7 = x^2y
+```
 
-### pnl
+We can find any of the exponents given the index
+```cpp
+#include "mnl.hpp"
+// x is direction 0, y is direction 1
+// m_0 = 1 = x^0 * y^0
+static_assert(mnl::PSpace2D::Exponent(0, 0) == 0);
+static_assert(mnl::PSpace2D::Exponent(0, 1) == 0);
+// m_1 = x = x^1 * y^0
+static_assert(mnl::PSpace2D::Exponent(1, 0) == 1);
+static_assert(mnl::PSpace2D::Exponent(1, 1) == 0);
+// m_7 = x^2y = x^2 * y^1
+static_assert(mnl::PSpace2D::Exponent(7, 0) == 2);
+static_assert(mnl::PSpace2D::Exponent(7, 1) == 1);
+```
+
+We can find the index of the monomial which is the product of two monomials
+```cpp
+#include "mnl.hpp"
+// m_5 * m_7 = y^2 * x^2y = x^2y^3 = m_18
+static_assert(mnl::PSpace2D::Product(5, 7) == 18);
+```
+
+We can find the index of the monomial which is the derivative with respect to some direction
+```cpp
+#include "mnl.hpp"
+// x is direction 0, y is direction 1
+
+// m_0 = 1 = x^0 * y^0
+static_assert(mnl::PSpace2D::D(0, 0) == -1); // d/dx(1) = 0 = m_-1
+static_assert(mnl::PSpace2D::D(0, 1) == -1); // d/dy(1) = 0 = m_-1
+
+// m_1 = x = x^1 * y^0
+static_assert(mnl::PSpace2D::D(1, 0) == 0);  // d/dx(x) = 1 = m_0
+static_assert(mnl::PSpace2D::D(1, 1) == -1); // d/dy(x) = 0 = m_-1
+
+// m_7 = x^2y = x^2 * y^1
+static_assert(mnl::PSpace2D::D(7, 0) == 4);  // d/dx(x^2y) ~ xy = m_4
+static_assert(mnl::PSpace2D::D(7, 1) == 3);  // d/dy(x^2y) ~ x^2 = m_3
+```
+
+We can find the index of the antiderivative with respect to some direction
+```cpp
+#include "mnl.hpp"
+// x is direction 0, y is direction 1
+
+// m_0 = 1 = x^0 * y^0
+static_assert(mnl::PSpace2D::AD(0, 0) == 1); // ADx(1) = x = m_1
+static_assert(mnl::PSpace2D::AD(0, 1) == 2); // ADy(1) = y = m_2
+
+// m_1 = x = x^1 * y^0
+static_assert(mnl::PSpace2D::AD(1, 0) == 3);  // ADx(x) ~ x^2 = m_3
+static_assert(mnl::PSpace2D::AD(1, 1) == 4);  // ADy(x) ~ xy  = m_4
+
+// m_7 = x^2y = x^2 * y^1
+static_assert(mnl::PSpace2D::AD(7, 0) == 11);  // ADx(x^2y) ~ x^3y   = m_11
+static_assert(mnl::PSpace2D::AD(7, 1) == 12);  // ADy(x^2y) ~ x^2y^2 = m_12
+```
+
+### Using the code in pnl.hpp
+
 
 ### glq
 
