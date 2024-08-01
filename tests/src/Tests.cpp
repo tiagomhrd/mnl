@@ -77,7 +77,6 @@ TEST_CASE("Monomial Order") {
 
 TEST_CASE("Sum of Exponents = Order") {
 	
-
 	SECTION("2D Monomials") {
 		const int d = 2;
 		for (monOrder k = 0; k < 5; ++k) {
@@ -397,6 +396,94 @@ TEST_CASE("Product and AntiDerivatives") {
 					for (int x = 0; x < d; ++x)
 						REQUIRE(Poly<d>::AD(alpha, x) == Poly<d>::Product(alpha, x + 1));
 		}
+	}
+}
+
+TEST_CASE("README Tests") {
+	SECTION("mnl.hpp"){
+		// Space Dimension
+		REQUIRE(mnl::PSpace2D::SpaceDim(0) == 1);  // {1}
+		REQUIRE(mnl::PSpace2D::SpaceDim(1) == 3);  // {1, x, y}
+		REQUIRE(mnl::PSpace2D::SpaceDim(2) == 6);  // {1, x, y, x^2, xy, y^2}
+		REQUIRE(mnl::PSpace2D::SpaceDim(3) == 10); // {1, x, y, x^2, xy, y^2, x^3, x^2y, xy^2, y^3}
+
+		// Monomial Order
+		REQUIRE(mnl::PSpace2D::MonOrder(0) == 0);  // m_0 = 1
+		REQUIRE(mnl::PSpace2D::MonOrder(1) == 1);  // m_1 = x
+		REQUIRE(mnl::PSpace2D::MonOrder(5) == 2);  // m_5 = y^2
+		REQUIRE(mnl::PSpace2D::MonOrder(7) == 3);  // m_7 = x^2y
+
+		// Exponents
+		// x is direction 0, y is direction 1
+		// m_0 = 1 = x^0 * y^0
+		REQUIRE(mnl::PSpace2D::Exponent(0, 0) == 0);
+		REQUIRE(mnl::PSpace2D::Exponent(0, 1) == 0);
+		// m_1 = x = x^1 * y^0
+		REQUIRE(mnl::PSpace2D::Exponent(1, 0) == 1);
+		REQUIRE(mnl::PSpace2D::Exponent(1, 1) == 0);
+		// m_7 = x^2y = x^2 * y^1
+		REQUIRE(mnl::PSpace2D::Exponent(7, 0) == 2);
+		REQUIRE(mnl::PSpace2D::Exponent(7, 1) == 1);
+
+		// Product
+		// m_5 * m_7 = y^2 * x^2y = x^2y^3 = m_18
+		REQUIRE(mnl::PSpace2D::Product(5, 7) == 18);
+
+		// Derivative
+		// m_0 = 1 = x^0 * y^0
+		REQUIRE(mnl::PSpace2D::D(0, 0) == -1); // d/dx(1) = 0 = m_-1
+		REQUIRE(mnl::PSpace2D::D(0, 1) == -1); // d/dy(1) = 0 = m_-1
+
+		// m_1 = x = x^1 * y^0
+		REQUIRE(mnl::PSpace2D::D(1, 0) == 0);  // d/dx(x) = 1 = m_0
+		REQUIRE(mnl::PSpace2D::D(1, 1) == -1); // d/dy(x) = 0 = m_-1
+
+		// m_7 = x^2y = x^2 * y^1
+		REQUIRE(mnl::PSpace2D::D(7, 0) == 4);  // d/dx(x^2y) ~ xy = m_4
+		REQUIRE(mnl::PSpace2D::D(7, 1) == 3);  // d/dy(x^2y) ~ x^2 = m_3
+
+		// Antiderivative
+		// m_0 = 1 = x^0 * y^0
+		REQUIRE(mnl::PSpace2D::AD(0, 0) == 1); // ADx(1) = x = m_1
+		REQUIRE(mnl::PSpace2D::AD(0, 1) == 2); // ADy(1) = y = m_2
+
+		// m_1 = x = x^1 * y^0
+		REQUIRE(mnl::PSpace2D::AD(1, 0) == 3);  // ADx(x) ~ x^2 = m_3
+		REQUIRE(mnl::PSpace2D::AD(1, 1) == 4);  // ADy(x) ~ xy  = m_4
+
+		// m_7 = x^2y = x^2 * y^1
+		REQUIRE(mnl::PSpace2D::AD(7, 0) == 11);  // ADx(x^2y) ~ x^3y   = m_11
+		REQUIRE(mnl::PSpace2D::AD(7, 1) == 12);  // ADy(x^2y) ~ x^2y^2 = m_12
+	}
+	SECTION("pnl.hpp"){
+		mnl::pnl2D p, q;
+		// p is x^2 + y^2
+		p.Terms[3] = 1.0;
+		p.Terms[5] = 1.0;
+		// q is 2 * x^3 + 3 * y^3
+		q.Terms[6] = 2.0;
+		q.Terms[9] = 3.0;
+
+		mnl::pnl2D prod = p * q;
+		// prod = 2 * x^5 + 3 * x^2y^3 + 2 * x^3y^2 + 3 * y^5
+		REQUIRE(prod.Terms[15] == 2.0); // 2 * x^5     = 2 * m_15
+		REQUIRE(prod.Terms[18] == 3.0); // 3 * x^2y^3  = 3 * m_18
+		REQUIRE(prod.Terms[17] == 2.0); // 2 * x^3y^2  = 2 * m_17
+		REQUIRE(prod.Terms[20] == 3.0); // 3 * y^5     = 3 * m_20
+
+		// p^2 = x^4 + 2 * x^2y^2 + y^4
+		p *= p;
+		REQUIRE(p.Terms[10] == 1.0); // 1 * x^4     = 1 * m_10
+		REQUIRE(p.Terms[12] == 2.0); // 2 * x^2y^2  = 2 * m_12
+		REQUIRE(p.Terms[14] == 1.0); // 1 * y^4     = 1 * m_14
+
+		// p^2 + q = x^4 + 2 * x^2y^2 + y^4 + 2 * x^3 + 3 * y^3
+		p += q;
+		REQUIRE(p.Terms[10] == 1.0); // 1 * x^4     = 1 * m_10
+		REQUIRE(p.Terms[12] == 2.0); // 2 * x^2y^2  = 2 * m_12
+		REQUIRE(p.Terms[14] == 1.0); // 1 * y^4     = 1 * m_14
+		REQUIRE(p.Terms[6]  == 2.0); // 2 * x^3     = 2 * m_6
+		REQUIRE(p.Terms[9]  == 3.0); // 3 * y^3     = 3 * m_9
 	}
 }
 

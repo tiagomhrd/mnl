@@ -129,6 +129,10 @@ The other indices depend on the number of variables, e.g. (adopting $x_0=x$, $x_
 - 2D: $m_1=x$, $m_2=y$, $m_3=x^2$, $m_4=xy$, $m_5=y^2$, etc.
 - 3D: $m_1=x$, $m_2=y$, $m_3=z$, etc.
 
+In the examples, the macro `REQUIRE(statement);` is used to assert a statement.
+
+All of the examples below are included inside the `Tests.cpp` file.
+
 ### Using the code in mnl.hpp
 
 The design consists of classes templated for the number of variables $d$, containing static functions providing the functionality.
@@ -158,19 +162,19 @@ Let's take for example monomials in 2D.
 One can check the dimension of the polynomial space of any order
 ```cpp
 #include "mnl.hpp"
-static_assert(mnl::PSpace2D::SpaceDim(0) == 1);  // {1}
-static_assert(mnl::PSpace2D::SpaceDim(1) == 3);  // {1, x, y}
-static_assert(mnl::PSpace2D::SpaceDim(2) == 6);  // {1, x, y, x^2, xy, y^2}
-static_assert(mnl::PSpace2D::SpaceDim(3) == 10); // {1, x, y, x^2, xy, y^2, x^3, x^2y, xy^2, y^3}
+REQUIRE(mnl::PSpace2D::SpaceDim(0) == 1);  // {1}
+REQUIRE(mnl::PSpace2D::SpaceDim(1) == 3);  // {1, x, y}
+REQUIRE(mnl::PSpace2D::SpaceDim(2) == 6);  // {1, x, y, x^2, xy, y^2}
+REQUIRE(mnl::PSpace2D::SpaceDim(3) == 10); // {1, x, y, x^2, xy, y^2, x^3, x^2y, xy^2, y^3}
 ```
 
 One can find the monomial order for any monomial based on its index
 ```cpp
 #include "mnl.hpp"
-static_assert(mnl::PSpace2D::MonOrder(0) == 0);  // m_0 = 1
-static_assert(mnl::PSpace2D::MonOrder(1) == 1);  // m_1 = x
-static_assert(mnl::PSpace2D::MonOrder(5) == 2);  // m_5 = y^2
-static_assert(mnl::PSpace2D::MonOrder(7) == 3);  // m_7 = x^2y
+REQUIRE(mnl::PSpace2D::MonOrder(0) == 0);  // m_0 = 1
+REQUIRE(mnl::PSpace2D::MonOrder(1) == 1);  // m_1 = x
+REQUIRE(mnl::PSpace2D::MonOrder(5) == 2);  // m_5 = y^2
+REQUIRE(mnl::PSpace2D::MonOrder(7) == 3);  // m_7 = x^2y
 ```
 
 One can find any of the exponents given the index
@@ -178,21 +182,21 @@ One can find any of the exponents given the index
 #include "mnl.hpp"
 // x is direction 0, y is direction 1
 // m_0 = 1 = x^0 * y^0
-static_assert(mnl::PSpace2D::Exponent(0, 0) == 0);
-static_assert(mnl::PSpace2D::Exponent(0, 1) == 0);
+REQUIRE(mnl::PSpace2D::Exponent(0, 0) == 0);
+REQUIRE(mnl::PSpace2D::Exponent(0, 1) == 0);
 // m_1 = x = x^1 * y^0
-static_assert(mnl::PSpace2D::Exponent(1, 0) == 1);
-static_assert(mnl::PSpace2D::Exponent(1, 1) == 0);
+REQUIRE(mnl::PSpace2D::Exponent(1, 0) == 1);
+REQUIRE(mnl::PSpace2D::Exponent(1, 1) == 0);
 // m_7 = x^2y = x^2 * y^1
-static_assert(mnl::PSpace2D::Exponent(7, 0) == 2);
-static_assert(mnl::PSpace2D::Exponent(7, 1) == 1);
+REQUIRE(mnl::PSpace2D::Exponent(7, 0) == 2);
+REQUIRE(mnl::PSpace2D::Exponent(7, 1) == 1);
 ```
 
 One can find the index of the monomial which is the product of two monomials
 ```cpp
 #include "mnl.hpp"
 // m_5 * m_7 = y^2 * x^2y = x^2y^3 = m_18
-static_assert(mnl::PSpace2D::Product(5, 7) == 18);
+REQUIRE(mnl::PSpace2D::Product(5, 7) == 18);
 ```
 
 One can find the index of the monomial which is the derivative with respect to some direction
@@ -201,16 +205,16 @@ One can find the index of the monomial which is the derivative with respect to s
 // x is direction 0, y is direction 1
 
 // m_0 = 1 = x^0 * y^0
-static_assert(mnl::PSpace2D::D(0, 0) == -1); // d/dx(1) = 0 = m_-1
-static_assert(mnl::PSpace2D::D(0, 1) == -1); // d/dy(1) = 0 = m_-1
+REQUIRE(mnl::PSpace2D::D(0, 0) == -1); // d/dx(1) = 0 = m_-1
+REQUIRE(mnl::PSpace2D::D(0, 1) == -1); // d/dy(1) = 0 = m_-1
 
 // m_1 = x = x^1 * y^0
-static_assert(mnl::PSpace2D::D(1, 0) == 0);  // d/dx(x) = 1 = m_0
-static_assert(mnl::PSpace2D::D(1, 1) == -1); // d/dy(x) = 0 = m_-1
+REQUIRE(mnl::PSpace2D::D(1, 0) == 0);  // d/dx(x) = 1 = m_0
+REQUIRE(mnl::PSpace2D::D(1, 1) == -1); // d/dy(x) = 0 = m_-1
 
 // m_7 = x^2y = x^2 * y^1
-static_assert(mnl::PSpace2D::D(7, 0) == 4);  // d/dx(x^2y) ~ xy = m_4
-static_assert(mnl::PSpace2D::D(7, 1) == 3);  // d/dy(x^2y) ~ x^2 = m_3
+REQUIRE(mnl::PSpace2D::D(7, 0) == 4);  // d/dx(x^2y) ~ xy = m_4
+REQUIRE(mnl::PSpace2D::D(7, 1) == 3);  // d/dy(x^2y) ~ x^2 = m_3
 ```
 
 One can find the index of the antiderivative with respect to some direction
@@ -219,16 +223,16 @@ One can find the index of the antiderivative with respect to some direction
 // x is direction 0, y is direction 1
 
 // m_0 = 1 = x^0 * y^0
-static_assert(mnl::PSpace2D::AD(0, 0) == 1); // ADx(1) = x = m_1
-static_assert(mnl::PSpace2D::AD(0, 1) == 2); // ADy(1) = y = m_2
+REQUIRE(mnl::PSpace2D::AD(0, 0) == 1); // ADx(1) = x = m_1
+REQUIRE(mnl::PSpace2D::AD(0, 1) == 2); // ADy(1) = y = m_2
 
 // m_1 = x = x^1 * y^0
-static_assert(mnl::PSpace2D::AD(1, 0) == 3);  // ADx(x) ~ x^2 = m_3
-static_assert(mnl::PSpace2D::AD(1, 1) == 4);  // ADy(x) ~ xy  = m_4
+REQUIRE(mnl::PSpace2D::AD(1, 0) == 3);  // ADx(x) ~ x^2 = m_3
+REQUIRE(mnl::PSpace2D::AD(1, 1) == 4);  // ADy(x) ~ xy  = m_4
 
 // m_7 = x^2y = x^2 * y^1
-static_assert(mnl::PSpace2D::AD(7, 0) == 11);  // ADx(x^2y) ~ x^3y   = m_11
-static_assert(mnl::PSpace2D::AD(7, 1) == 12);  // ADy(x^2y) ~ x^2y^2 = m_12
+REQUIRE(mnl::PSpace2D::AD(7, 0) == 11);  // ADx(x^2y) ~ x^3y   = m_11
+REQUIRE(mnl::PSpace2D::AD(7, 1) == 12);  // ADy(x^2y) ~ x^2y^2 = m_12
 ```
 
 ### Using the code in pnl.hpp
@@ -271,24 +275,24 @@ q.Terms[9] = 3.0;
 
 mnl::pnl2D prod = p * q;
 // prod = 2 * x^5 + 3 * x^2y^3 + 2 * x^3y^2 + 3 * y^5
-static_assert(prod.Terms[15] == 2.0); // 2 * x^5     = 2 * m_15
-static_assert(prod.Terms[18] == 3.0); // 3 * x^2y^3  = 3 * m_18
-static_assert(prod.Terms[17] == 2.0); // 2 * x^3y^2  = 2 * m_17
-static_assert(prod.Terms[20] == 3.0); // 3 * y^5     = 3 * m_20
+REQUIRE(prod.Terms[15] == 2.0); // 2 * x^5     = 2 * m_15
+REQUIRE(prod.Terms[18] == 3.0); // 3 * x^2y^3  = 3 * m_18
+REQUIRE(prod.Terms[17] == 2.0); // 2 * x^3y^2  = 2 * m_17
+REQUIRE(prod.Terms[20] == 3.0); // 3 * y^5     = 3 * m_20
 
 // p^2 = x^4 + 2 * x^2y^2 + y^4
 p *= p;
-static_assert(p.Terms[10] == 1.0); // 1 * x^4     = 1 * m_10
-static_assert(p.Terms[12] == 2.0); // 2 * x^2y^2  = 2 * m_12
-static_assert(p.Terms[14] == 1.0); // 1 * y^4     = 1 * m_14
+REQUIRE(p.Terms[10] == 1.0); // 1 * x^4     = 1 * m_10
+REQUIRE(p.Terms[12] == 2.0); // 2 * x^2y^2  = 2 * m_12
+REQUIRE(p.Terms[14] == 1.0); // 1 * y^4     = 1 * m_14
 
 // p^2 + q = x^4 + 2 * x^2y^2 + y^4 + 2 * x^3 + 3 * y^3
 p += q;
-static_assert(p.Terms[10] == 1.0); // 1 * x^4     = 1 * m_10
-static_assert(p.Terms[12] == 2.0); // 2 * x^2y^2  = 2 * m_12
-static_assert(p.Terms[14] == 1.0); // 1 * y^4     = 1 * m_14
-static_assert(p.Terms[6]  == 2.0); // 2 * x^3     = 2 * m_6
-static_assert(p.Terms[9]  == 3.0); // 3 * y^3     = 3 * m_9
+REQUIRE(p.Terms[10] == 1.0); // 1 * x^4     = 1 * m_10
+REQUIRE(p.Terms[12] == 2.0); // 2 * x^2y^2  = 2 * m_12
+REQUIRE(p.Terms[14] == 1.0); // 1 * y^4     = 1 * m_14
+REQUIRE(p.Terms[6]  == 2.0); // 2 * x^3     = 2 * m_6
+REQUIRE(p.Terms[9]  == 3.0); // 3 * y^3     = 3 * m_9
 ```
 
 ### Using the code in glq.hpp
