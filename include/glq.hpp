@@ -263,9 +263,9 @@ namespace mnl {
     };
 
     const std::vector<std::array<double, 2>> GaussLegendre(const monOrder k) {
-        const int n = ceil((k + 1.) / 2.);
-        const size_t startIndex = floor((n - 1) * (n - 1) / 4.);
-        const size_t readLength = floor(n / 2.);
+        const int n = (int)ceil((k + 1.) / 2.);
+        const size_t startIndex = (size_t)floor((n - 1) * (n - 1) / 4.);
+        const size_t readLength = (size_t)floor(n / 2.);
 
         std::vector<std::array<double, 2>> out;
         double wSum = 0.0;
@@ -285,9 +285,9 @@ namespace mnl {
     }
 
     const std::vector<std::array<double, 2>> GaussLegendreR(const monOrder k) {
-        const int n = ceil((k + 1.) / 2.);
-        const size_t startIndex = floor((n - 1) * (n - 1) / 4.);
-        const size_t readLength = floor(n / 2.);
+        const int n = (int)ceil((k + 1.) / 2.);
+        const size_t startIndex = (size_t)floor((n - 1) * (n - 1) / 4.);
+        const size_t readLength = (size_t)floor(n / 2.);
 
         std::vector<std::array<double, 2>> out;
         double wSum = 0.0;
