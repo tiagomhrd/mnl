@@ -10,8 +10,8 @@ using namespace mnl;
 const int dim(const int d, const int k) {
 	if (k == -1) return 0;
 	if (k == 0) return 1;
-	return std::ranges::fold_left(std::views::iota((k > d ? k : d) + 1, k + d + 1), 1LL, std::multiplies<int64_t>()) /
-		std::ranges::fold_left(std::views::iota(1, (k > d ? d : k) + 1), 1LL, std::multiplies<int64_t>());
+	return std::ranges::fold_left(std::views::iota((k > d ? k : d) + 1, k + d + 1), 1LL, std::multiplies<int>()) /
+		std::ranges::fold_left(std::views::iota(1, (k > d ? d : k) + 1), 1LL, std::multiplies<int>());
 }
 
 TEST_CASE("Space Dimensions") {
