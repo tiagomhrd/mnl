@@ -21,6 +21,7 @@
 #define GLQ
 #include "mnl.hpp"
 #include <vector>
+#include <cmath>
 
 namespace mnl {
     // Compressed look-up table
@@ -593,7 +594,7 @@ namespace mnl {
         out.reserve((size_t)n);
         out.push_back({0., endPointWeight});
         out.push_back({1., endPointWeight});
-        double wSum = endPointWeight;
+        double wSum = 2 * endPointWeight;
 
         if (n == 2)
             return out;
