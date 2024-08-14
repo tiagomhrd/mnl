@@ -21,6 +21,7 @@
 #define GLQ
 #include "mnl.hpp"
 #include <vector>
+#include <cmath>
 
 namespace mnl {
     // Compressed look-up table
