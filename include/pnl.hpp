@@ -98,7 +98,6 @@ namespace mnl {
     ALIASpnl(7);
     ALIASpnl(8);
     ALIASpnl(9);
-    ALIASpnl(10);
 #undef ALIASpnl
 
 }

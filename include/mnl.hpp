@@ -152,7 +152,6 @@ namespace mnl {
     ALIASPSpace(7);
     ALIASPSpace(8);
     ALIASPSpace(9);
-    ALIASPSpace(10);
     #undef ALIASPSpace
 }
 #endif
