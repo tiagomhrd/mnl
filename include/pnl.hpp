@@ -32,7 +32,7 @@
             This is produced in C++11 and includes only <array> and <unordered_map>.
 
 **********************************************************************************************************************************/
-
+#pragma once
 #ifndef PNL
 #define PNL
 #include "mnl.hpp"
