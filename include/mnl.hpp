@@ -20,6 +20,7 @@
             This is produced in C++11 and includes only <array>.
 
 **********************************************************************************************************************************/
+#pragma once
 #ifndef MNL
 #define MNL
 #include <array>

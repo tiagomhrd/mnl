@@ -16,7 +16,7 @@
             This is produced in C++11 and includes only <array> and <vector>.
 
 **********************************************************************************************************************************/
-
+#pragma once
 #ifndef GLQ
 #define GLQ
 #include "mnl.hpp"
@@ -511,7 +511,7 @@ namespace mnl {
         0.9930563584336583, 	0.0116
     };
 
-    const std::vector<std::array<double, 2>> GaussLegendre(const monOrder k) {
+    inline const std::vector<std::array<double, 2>> GaussLegendre(const monOrder k) {
         const int n = (int)ceil((k + 1.) / 2.);
         const size_t startIndex = (size_t)floor((n - 1) * (n - 1) / 4.);
         const size_t readLength = (size_t)floor(n / 2.);
@@ -533,7 +533,7 @@ namespace mnl {
         return out;
     }
 
-    const std::vector<std::array<double, 2>> GaussLegendreR(const monOrder k) {
+    inline const std::vector<std::array<double, 2>> GaussLegendreR(const monOrder k) {
         const int n = (int)ceil((k + 1.) / 2.);
         const size_t startIndex = (size_t)floor((n - 1) * (n - 1) / 4.);
         const size_t readLength = (size_t)floor(n / 2.);
@@ -554,7 +554,7 @@ namespace mnl {
         return out;
     }
 
-    const std::vector<std::array<double, 2>> GaussLobatto(const monOrder k){
+    inline const std::vector<std::array<double, 2>> GaussLobatto(const monOrder k){
         const int n = (int)ceil((k + 3.) / 2.);
         const size_t startIndex = (size_t)floor((n - 3) * (n - 3) / 4.);
         const size_t readLength = (size_t)floor((n - 2) / 2.);
@@ -584,7 +584,7 @@ namespace mnl {
         return out;
     }
 
-    const std::vector<std::array<double, 2>> GaussLobattoR(const monOrder k){
+    inline const std::vector<std::array<double, 2>> GaussLobattoR(const monOrder k){
         const int n = (int)ceil((k + 3.) / 2.);
         const size_t startIndex = (size_t)floor((n - 3) * (n - 3) / 4.);
         const size_t readLength = (size_t)floor((n - 2) / 2.);
