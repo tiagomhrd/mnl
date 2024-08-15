@@ -51,6 +51,11 @@ This integration scheme is aimed at the sequential integration of monomials by p
 
 The quadratures were obtained with the software [Mathematica](https://www.wolfram.com/mathematica/), using function `GaussianQuadratureWeights`, and compressing (using their symmetry) results into a lookup table.
 
+Additionally, `glq.hpp` also includes Gauss-Lobatto quadrature rules, as they are commonly used in the VEM.
+The quadratures are obtained by solving for the roots of derivatives of Legendre polynomials for the positions, and computing the weights from the expressions in [Abramowitz and Stegun](https://personal.math.ubc.ca/~cbm/aands/abramowitz_and_stegun.pdf).
+This has been done using Mathematica, and these rules have been compressed in similar manner (by taking advantage of their symmetry), and hardcoded along with functions to extract the rules easily.
+
+
 ## Installation Instructions
 
 So far, the code is implemented only in C++, and uses only `.hpp` files which can be included directly into the user's code.
@@ -307,10 +312,16 @@ The code summary is
 namespace mnl{
     const std::vector<std::array<double, 2>> GaussLegendre(const monOrder k);
     const std::vector<std::array<double, 2>> GaussLegendreR(const monOrder k);
+    const std::vector<std::array<double, 2>> GaussLobatto(const monOrder k);
+    const std::vector<std::array<double, 2>> GaussLobattoR(const monOrder k);
 }
 ```
 
 `GaussLegendre(const monOrder k)` returns a vector with `{position, weight}` pairs in the local system for the interval $[-1,1]$.
 
 `GaussLegendreR(const monOrder k)` returns a vector with `{position, weight}` pairs in the local system for the interval $[0,1]$.
+
+`GaussLobatto(const monOrder k)` returns a vector with `{position, weight}` pairs in the local system for the interval $[-1,1]$.
+
+`GaussLobattoR(const monOrder k)` returns a vector with `{position, weight}` pairs in the local system for the interval $[0,1]$.
 
