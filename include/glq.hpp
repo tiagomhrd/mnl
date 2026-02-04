@@ -534,6 +534,27 @@ namespace mnl {
         return out;
     }
 
+    inline const std::vector<std::array<double, 2>> GaussLegendreN(const int numberOfPoints) {
+        const size_t startIndex = (size_t)floor((numberOfPoints - 1) * (numberOfPoints - 1) / 4.);
+        const size_t readLength = (size_t)floor(numberOfPoints / 2.);
+
+        std::vector<std::array<double, 2>> out;
+        double wSum = 0.0;
+        for (size_t i{}; i < readLength; ++i) {
+            const double xi = _clut[2 * (startIndex + i)], wi = _clut[2 * (startIndex + i) + 1];
+            out.push_back({ xi, wi });
+            out.push_back({ -xi, wi });
+            wSum += wi;
+        }
+
+        if (!(numberOfPoints % 2))
+            return out;
+
+
+        out.push_back({ 0, 2. * (1. - wSum) });
+        return out;
+    }
+
     inline const std::vector<std::array<double, 2>> GaussLegendreR(const monOrder k) {
         const int n = (int)ceil((k + 1.) / 2.);
         const size_t startIndex = (size_t)floor((n - 1) * (n - 1) / 4.);
@@ -549,6 +570,26 @@ namespace mnl {
         }
 
         if (!(n % 2))
+            return out;
+
+        out.push_back({ .5, 1. - wSum });
+        return out;
+    }
+
+    inline const std::vector<std::array<double, 2>> GaussLegendreRN(const int numberOfPoints) {
+        const size_t startIndex = (size_t)floor((numberOfPoints - 1) * (numberOfPoints - 1) / 4.);
+        const size_t readLength = (size_t)floor(numberOfPoints / 2.);
+
+        std::vector<std::array<double, 2>> out;
+        double wSum = 0.0;
+        for (size_t i{}; i < readLength; ++i) {
+            const double xi = 0.5 * _clut[2 * (startIndex + i)] + .5, wi = _clut[2 * (startIndex + i) + 1] * .5;
+            out.push_back({ xi, wi });
+            out.push_back({ 1. - xi , wi });
+            wSum += 2 * wi;
+        }
+
+        if (!(numberOfPoints % 2))
             return out;
 
         out.push_back({ .5, 1. - wSum });
@@ -585,6 +626,35 @@ namespace mnl {
         return out;
     }
 
+    inline const std::vector<std::array<double, 2>> GaussLobattoN(const int numberOfPoints){
+        const size_t startIndex = (size_t)floor((numberOfPoints - 3) * (numberOfPoints - 3) / 4.);
+        const size_t readLength = (size_t)floor((numberOfPoints - 2) / 2.);
+        
+        const double endPointWeight = 2./(numberOfPoints * (numberOfPoints - 1));
+        std::vector<std::array<double, 2>> out;
+        out.reserve((size_t) numberOfPoints);
+        out.push_back({-1., endPointWeight});
+        out.push_back({1., endPointWeight});
+        double wSum = endPointWeight;
+
+        if (numberOfPoints == 2)
+            return out;
+
+        for (size_t i{}; i < readLength; ++i) {
+            const double xi = _lobattoclut[2 * (startIndex + i)], wi = _lobattoclut[2 * (startIndex + i) + 1];
+            out.push_back({ xi, wi });
+            out.push_back({ -xi, wi });
+            wSum += wi;
+        }
+
+        if (!(numberOfPoints % 2))
+            return out;
+
+
+        out.push_back({ 0, 2. * (1. - wSum) });
+        return out;
+    }
+
     inline const std::vector<std::array<double, 2>> GaussLobattoR(const monOrder k){
         const int n = (int)ceil((k + 3.) / 2.);
         const size_t startIndex = (size_t)floor((n - 3) * (n - 3) / 4.);
@@ -608,6 +678,34 @@ namespace mnl {
         }
 
         if (!(n % 2))
+            return out;
+
+        out.push_back({ 0.5 , (1. - wSum) });
+        return out;
+    }
+
+    inline const std::vector<std::array<double, 2>> GaussLobattoRN(const int numberOfPoints){
+        const size_t startIndex = (size_t)floor((numberOfPoints - 3) * (numberOfPoints - 3) / 4.);
+        const size_t readLength = (size_t)floor((numberOfPoints - 2) / 2.);
+        
+        const double endPointWeight = 1./(numberOfPoints * (numberOfPoints - 1));
+        std::vector<std::array<double, 2>> out;
+        out.reserve((size_t) numberOfPoints);
+        out.push_back({0., endPointWeight});
+        out.push_back({1., endPointWeight});
+        double wSum = 2 * endPointWeight;
+
+        if (numberOfPoints == 2)
+            return out;
+
+        for (size_t i{}; i < readLength; ++i) {
+            const double xi = .5 * _lobattoclut[2 * (startIndex + i)] + .5, wi = .5 * _lobattoclut[2 * (startIndex + i) + 1];
+            out.push_back({ xi, wi });
+            out.push_back({ 1. - xi, wi });
+            wSum += 2 * wi;
+        }
+
+        if (!(numberOfPoints % 2))
             return out;
 
         out.push_back({ 0.5 , (1. - wSum) });

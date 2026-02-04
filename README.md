@@ -19,7 +19,7 @@ The motivation came from implementing the Virtual Element Method (VEM), more spe
 
 Although the notation was used only to enumerate the monomials, it is here extended in a way one can find other useful information for the computation of the method while using only integers, such as the order of a given monomial, its derivatives and anti-derivatives, the monomial resulting from product of monomials, etc.
 
-This approach has also been extended to arbitrary number of variabels, mostly because it was possible, although no use is proposed for them so far.
+This approach has also been extended to arbitrary number of variables, mostly because it was possible, although no use is proposed for them so far.
 
 ## Organization and Features
 
