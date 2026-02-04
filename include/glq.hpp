@@ -19,11 +19,12 @@
 #pragma once
 #ifndef GLQ
 #define GLQ
-#include "mnl.hpp"
+
 #include <vector>
-#include <cmath>
+#include <array>
 
 namespace mnl {
+    using monOrder = int;
     // Compressed look-up table
     constexpr std::array<double, 480> _clut{
     0.57735026918963,	1.,
