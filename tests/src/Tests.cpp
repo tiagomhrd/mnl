@@ -4,6 +4,7 @@
 
 #include "mnl.hpp"
 #include "pnl.hpp"
+#include "gtq.hpp"
 
 using namespace mnl;
 
@@ -585,6 +586,38 @@ TEST_CASE("3D Polynomials") {
 		REQUIRE(res.Terms[18] == 3.0);
 		REQUIRE(res.Terms.size() == 10);
 		REQUIRE(res.Order() == 3);
+	}
+}
+
+TEST_CASE("Triangle Quadrature") {
+	SECTION("Size of quadrature"){
+		for (mnl::monOrder k = 0; k <= 14; ++k)
+			REQUIRE(mnl::GaussLegendreTriangle(k).size() == mnl::_nQuadraturePointsPerOrder[(size_t)k]);
+	}
+	SECTION("Integration of x^n"){
+		constexpr std::array<std::array<double, 2>, 3> triangle {
+			std::array<double, 2>{0.,0.},
+			std::array<double, 2>{1.,0.},
+			std::array<double, 2>{0.,1.}
+		};
+		constexpr double area = 0.5;
+		constexpr double tol = 1e-13;
+		for (mnl::monOrder k = 0; k <= 14; ++k){
+			INFO("k = " << k);
+			const double res = 1./(double((k + 1)*(k + 2)));
+			const auto quadrature = mnl::GaussLegendreTriangle(k);
+			double integral = 0.0;
+			for (const auto& qData : quadrature){
+				const double &w = qData[2];
+				const double &xi0 = qData[0], 
+							 &xi1 = qData[1], 
+							  xi2 = 1. - xi0 - xi1;
+				const double xg = xi0 * triangle[0][0] + xi1 * triangle[1][0] + xi2 * triangle[2][0];
+				integral += pow(xg, k) * w;
+			}
+			integral *= area;
+			REQUIRE_THAT(integral, Catch::Matchers::WithinAbs(res, tol));
+		}
 	}
 }
 
